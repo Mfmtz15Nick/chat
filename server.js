@@ -1,6 +1,10 @@
 let express = require('express')
 let bodyParser = require('body-parser')
 
+let db = require('./db')
+
+db.connect()
+
 
 let router = require('./network/routes')
 

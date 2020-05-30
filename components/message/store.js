@@ -1,21 +1,4 @@
-
-let db = require('mongoose')
-let credentials = require('./credentials')
-
 let Model = require('./model')
-
-db.Promise = global.Promise
-
-
-// Conexion a bd
-db.connect(credentials.url,{
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-
-console.log('[db] Conectada con exito');
-
-
 
 let addMessage = (message) => {
     //  list.push(message)
@@ -23,12 +6,37 @@ let addMessage = (message) => {
     myMessage.save()
 }
 
-let getMessage = async () => {
-    let messages = await Model.find()
+let getMessage = async (filterUser) => {
+    let filter = {}
+    if (filterUser) {
+        filter = { user: filterUser }
+    }
+    let messages = await Model.find(filter)
     return messages
 }
+let updateText = async (id, message) => {
+
+    let foundMessage = await Model.findOne({
+        _id: id,
+    })
+    foundMessage.message = message
+    return await foundMessage.save()
+     
+}
+let removeMessage = async (id) => {
+
+    return Model.deleteOne({
+        _id : id
+    })
+
+     
+}
+
+
 
 module.exports = {
     add: addMessage,
-    list: getMessage
+    list: getMessage,
+    updateText,
+    removeMessage
 }
