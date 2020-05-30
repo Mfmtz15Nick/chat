@@ -5,8 +5,7 @@ let controller = require('./controller')
 
 let router = express.Router()
 
-router.get('/',(req, res) =>{
-
+router.get('/', (req, res) =>{
     controller.getMessage()
     .then((messageList) => {
         response.success(req, res, messageList, 200)
@@ -16,7 +15,7 @@ router.get('/',(req, res) =>{
     })
 
 })
-router.post('/',(req, res) =>{
+router.post('/', (req, res) =>{
     controller.addMessage(req.body.user, req.body.message)
     .then((fullMessage)=>{
         response.success(req,res,fullMessage,201)
@@ -25,6 +24,11 @@ router.post('/',(req, res) =>{
         response.error(req,res,'Error simulado.',400,'Error en network.')
     })
 
+})
+router.patch('/:id', (req, res) => {
+    
+
+    res.send('OK')
 })
 
 
