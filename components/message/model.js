@@ -3,7 +3,10 @@ let mongoose = require('mongoose')
 let Schema = mongoose.Schema
 
 let mySchema = new Schema({
-    user: String,
+    user: {
+        type: Schema.ObjectId,
+        ref: 'User'
+    },
     message: {
         type:String,
         required: true
